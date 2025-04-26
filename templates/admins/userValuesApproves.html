@@ -1,0 +1,195 @@
+{% extends 'admins/adminbase.html' %}
+{% block content %}
+{% load static %}
+
+<style>
+    .container {
+        width: 80%;
+        margin: 30px auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: transparent;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        text-align: center; /* Center align */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .message-box {
+        text-align: center;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .alert {
+        display: inline-block;
+        padding: 12px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .alert-success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+
+    .alert-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    .table-container {
+        width: 90%;
+        margin: auto;
+    }
+
+    .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid black;
+        padding: 12px;
+        font-weight: 600;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    th {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    tr:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .approved {
+        color: green;
+        font-weight: bold;
+    }
+
+    .pending {
+        color: red;
+        font-weight: bold;
+    }
+
+    .btn-approve, .btn-delete {
+        background-color: green;
+        color: white;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .btn-approve:hover {
+        background-color: darkgreen;
+    }
+
+    .btn-delete {
+        background-color: red;
+    }
+
+    .btn-delete:hover {
+        background-color: darkred;
+    }
+
+    /* Center the message if no properties exist */
+    .no-data-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+        font-size: 18px;
+        font-weight: bold;
+        color: gray;
+    }
+</style>
+
+<div class="container">
+    <h2>Real Estate Listings</h2>
+
+    {% if messages %}
+    <div class="message-box">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if properties %}
+    <div class="table-container">  
+        <div class="table-responsive">  
+            <table class="table table-bordered">  
+                <thead>
+                    <tr>
+                        <th>Posted By</th>
+                        <th>BHK No</th>
+                        <th>Square Feet</th>
+                        <th>Price (Lacs)</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for property in properties %}
+                    <tr>
+                        <td>{{ property.posted_by }}</td>
+                        <td>{{ property.bhk_no }}</td>
+                        <td>{{ property.square_ft }}</td>
+                        <td>{{ property.target_price }}</td>
+
+                        <td class="{% if property.is_approved %}approved{% else %}pending{% endif %}">
+                            {% if property.is_approved %}
+                            <span class="badge badge-success">Approved</span>
+                            {% else %}
+                            <span class="badge badge-warning">Pending</span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if not property.is_approved %}
+                            <a href="approve_property?property_id={{property.id}}" class="btn btn-approve btn-sm" onclick="return confirm('Approve this property?')">Approve</a>
+                            <a href="delete_property?property_id={{property.id}}" class="btn btn-delete btn-sm" onclick="return confirm('Delete this property?')">Delete</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div> 
+    </div>
+    {% else %}
+    <div class="no-data-container">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>No properties found.</p>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

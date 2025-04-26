@@ -1,0 +1,178 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <style>
+        /* General Styles */
+        html, body {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content:flex-start;
+        }
+
+        /* Login Section */
+        .login-section {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            position: relative;
+            z-index: 2;
+            padding-left: 350px;
+            width: 100%;
+        }
+
+        /* Modern Login Box */
+        .login-box {
+            background: rgba(5, 5, 5, 0.12); /* Subtle transparency */
+            backdrop-filter: blur(12px);
+            padding: 30px; /* Reduced padding */
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.4);
+            max-width: 600px; /* Increased width */
+            width: 100%;
+            color: #fff; /* White text */
+            border: 1px solid rgba(255, 255, 255, 0.2); /* Soft border */
+        }
+
+        /* Heading */
+        .login-box h2 {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            color: #ff9800; /* Orange for contrast */
+        }
+        
+        .login-box p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
+        /* Admin Text */
+        .admin-text {
+            color: #ff9800;
+            font-weight: bold;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 15px; /* Reduced spacing */
+            text-align: left;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.2); /* Glass effect */
+            color: #fff;
+            transition: 0.3s;
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 15px;
+        }
+
+        .form-group input:focus {
+            background: rgba(255, 255, 255, 0.3);
+            border: 1px solid #ff9800;
+        }
+
+        /* Login Button */
+        .btn-primary {
+            background: linear-gradient(45deg, #ff9800, #e68900);
+            border: none;
+            padding: 12px 30px;
+            font-size: 18px;
+            border-radius: 8px;
+            transition: 0.3s;
+            cursor: pointer;
+            width: 100%;
+            color: white;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #e68900, #d67400);
+            transform: scale(1.05);
+        }
+        .messages {
+        margin-bottom: 15px;
+        }
+
+        .alert {
+            padding: 12px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .alert-success {
+            background: rgba(236, 9, 9, 0.9);
+            color: #fff;
+        }
+
+        .alert-error {
+            background: rgba(244, 67, 54, 0.9);
+            color: #fff;
+        }
+
+    </style>
+</head>
+<body>
+
+    <section id="login" class="login-section">
+        
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="login-box">
+                    {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <h2>Admin Login</h2>
+                    <p>Enter your credentials below:</p>
+                    <p>Use Username and Password as <span class="admin-text">admin</span></p>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="username" id="username" placeholder="Your Username" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Your Password" required>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
+
+{% endblock %}

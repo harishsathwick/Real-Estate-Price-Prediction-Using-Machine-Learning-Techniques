@@ -1,0 +1,194 @@
+{% extends 'users/userbase.html' %}
+{% load static %}
+
+{% block contents %}
+
+<style>
+    /* Full Page Styling */
+    body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    /* Glassmorphism Card */
+    .card {
+        width: 90%;
+        max-width: 600px;
+        padding: 30px;
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.5); /* Darker Glass Effect */
+        backdrop-filter: blur(12px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        color: #ddd; /* Light gray text */
+    }
+
+    /* Title */
+    .card h1 {
+        font-size: 26px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        color: #00ffff; /* Cyan heading */
+    }
+
+    /* Form Styling */
+    .form-group {
+        margin-bottom: 15px;
+        text-align: left;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #00ffff; /* Cyan labels */
+    }
+
+    /* Inputs & Select */
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid rgba(0, 255, 255, 0.5); /* Cyan border */
+        border-radius: 8px;
+        background: rgba(0, 0, 0, 0.3); /* Darker input fields */
+        color: #ddd; /* Light gray text */
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+
+    /* Input Hover & Focus */
+    input:focus,
+    select:focus,
+    textarea:focus {
+        border-color: cyan;
+        outline: none;
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+    }
+
+    /* Submit Button */
+    button {
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(45deg, cyan, #007bff);
+        border: none;
+        color: black;
+        font-size: 18px;
+        font-weight: bold;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    button:hover {
+        background: linear-gradient(45deg, #007bff, cyan);
+        transform: scale(1.05);
+    }
+
+    /* Responsive */
+    @media screen and (max-width: 768px) {
+        .card {
+            width: 95%;
+            padding: 20px;
+        }
+
+        .card h1 {
+            font-size: 22px;
+        }
+
+        button {
+            font-size: 16px;
+        }
+    }
+</style>
+
+<!-- Main Content Container -->
+<div class="main-container">
+    <div class="card">
+        <h1>🏡 Enter Real Estate Data</h1>
+        
+        <form method="post" action="{% url 'userAddedValues' %}">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="posted_by">📝 Posted By:</label>
+                <input type="text" id="posted_by" name="posted_by" required placeholder="Enter your name">
+            </div>
+
+            <div class="form-group">
+                <label for="under_construction">🏗️ Under Construction:</label>
+                <select id="under_construction" name="under_construction" required>
+                    <option value="0">❌ No</option>
+                    <option value="1">✅ Yes</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="rera">🏆 RERA Score:</label>
+                <input type="number" step="any" id="rera" name="rera" required placeholder="Enter RERA Score">
+            </div>
+
+            <div class="form-group">
+                <label for="bhk_no">🏠 Number of BHKs:</label>
+                <input type="number" id="bhk_no" name="bhk_no" required placeholder="Enter number of BHKs">
+            </div>
+
+            <div class="form-group">
+                <label for="bhk_or">🏢 BHK or RK:</label>
+                <input type="text" id="bhk_or" name="bhk_or" required placeholder="Enter BHK or RK">
+            </div>
+
+            <div class="form-group">
+                <label for="square_ft">📏 Square Footage:</label>
+                <input type="number" step="any" id="square_ft" name="square_ft" required placeholder="Enter area in sqft">
+            </div>
+
+            <div class="form-group">
+                <label for="ready_to_move">🚪 Ready to Move:</label>
+                <select id="ready_to_move" name="ready_to_move" required>
+                    <option value="0">❌ No</option>
+                    <option value="1">✅ Yes</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="resale">🔄 Resale:</label>
+                <select id="resale" name="resale" required>
+                    <option value="0">❌ No</option>
+                    <option value="1">✅ Yes</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="address">📍 Address:</label>
+                <textarea id="address" name="address" rows="3" required placeholder="Enter property address"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="longitude">🗺️ Longitude:</label>
+                <input type="number" step="any" id="longitude" name="longitude" required placeholder="Enter longitude">
+            </div>
+
+            <div class="form-group">
+                <label for="latitude">🗺️ Latitude:</label>
+                <input type="number" step="any" id="latitude" name="latitude" required placeholder="Enter latitude">
+            </div>
+
+            <div class="form-group">
+                <label for="target_price">💰 Target Price (in Lakhs):</label>
+                <input type="number" step="any" id="target_price" name="target_price" required placeholder="Enter price in lakhs">
+            </div>
+
+            <button type="submit">🚀 Submit Data</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

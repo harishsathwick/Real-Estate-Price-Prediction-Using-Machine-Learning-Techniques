@@ -1,0 +1,15 @@
+
+open project(Code) location 
+
+from location open cmd 
+
+run cmd : python manage.py runserver 
+
+copy the provided link to any browser..
+
+
+1. Register 
+2. Admin login ( username: admin, password: admin)
+3. activate user
+4. user login 
+5. follow modules in homepage

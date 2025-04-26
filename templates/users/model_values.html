@@ -1,0 +1,20 @@
+{% extends 'users/userbase.html' %}
+{% load static %}
+{% block contents %} 
+<body>
+  <h1>Best Model: {{ best_model_name }}</h1>
+
+  <h2>Model Results</h2>
+  <ul>
+      {% for model_name, metrics in results.items %}
+          <li>{{ model_name }}: RMSE = {{ metrics.RMSE }}, R2 = {{ metrics.R2 }}</li>
+      {% endfor %}
+  </ul>
+
+  <h2>Correlation Matrix</h2>
+  {{ correlation_matrix|safe }}
+
+  
+</body>
+{% endblock %}
+ 

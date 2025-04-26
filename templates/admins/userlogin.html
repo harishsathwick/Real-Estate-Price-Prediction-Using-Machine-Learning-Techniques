@@ -1,0 +1,144 @@
+{% extends 'base/main.html' %}
+{% load static %}
+
+{% block content %}
+<div class="login-section">
+    <div class="login-box">
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <h2>Login</h2>
+        <p>Enter your credentials below:</p><br>
+
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="text" class="form-control" name="username" id="username" placeholder="Your Username" required>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" name="password" id="password" placeholder="Your Password" required>
+            </div>
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    /* General Styles */
+    html, body {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start; /* Aligns to the left */
+    }
+
+    .login-section {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start; /* Moves to the left */
+        height: 100vh;
+        width: 100%;
+        padding-left: 350px; /* Adjust left padding for spacing */
+        position: relative;
+        z-index: 2;
+    }
+
+    .login-box {
+        background: rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(12px);
+        padding: 30px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.4);
+        max-width: 400px;
+        width: 100%;
+        color: #f8f6f6;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .login-box h2 {
+        font-size: 26px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        color: #ff9800;
+    }
+
+    .login-box p {
+        color: #ddd;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+        text-align: left;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+        font-size: 16px;
+        background: rgba(255, 255, 255, 0.2);
+        color: #fff;
+        transition: 0.3s;
+    }
+
+    .form-group input::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 15px;
+    }
+
+    .form-group input:focus {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-primary {
+        background: #ff9800;
+        border: none;
+        padding: 12px 30px;
+        font-size: 18px;
+        border-radius: 8px;
+        transition: 0.3s;
+        cursor: pointer;
+        width: 100%;
+        color: #fff;
+    }
+
+    .btn-primary:hover {
+        background: #e68900;
+    }
+
+    .messages {
+        margin-bottom: 15px;
+    }
+
+    .alert {
+        padding: 12px;
+        border-radius: 5px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .alert-success {
+        background: rgba(76, 175, 80, 0.9);
+        color: #fff;
+    }
+
+    .alert-error {
+        background: rgba(244, 67, 54, 0.9);
+        color: #fff;
+    }
+</style>
+{% endblock %}

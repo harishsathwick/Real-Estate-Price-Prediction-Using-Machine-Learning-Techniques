@@ -1,0 +1,155 @@
+{% extends 'admins/adminbase.html' %}
+
+{% block content %}
+{% load static %}
+<style>
+    /* Apply a blurred background */
+    html, body {
+        height: 100%;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start; /* Aligns to the left */
+        overflow: hidden;
+    }
+
+    /* Container */
+    .table-section {
+        width: 80%;
+        padding: 250px;
+        padding-left: 100px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        color: #000000;
+
+    }
+
+    h2 {
+        font-size: 28px;
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #fff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Table Styles */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        border-radius: 10px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.1); /* Semi-transparent table */
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        font-size: 14px;
+        color: #fff;
+    }
+
+    th {
+        background-color: rgba(255, 255, 255, 0.2);
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    tr:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Buttons */
+    .btn {
+        padding: 8px 15px;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: bold;
+        text-decoration: none;
+        transition: 0.3s;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        background-color: #28a745;
+        color: #fff;
+    }
+
+    .btn-primary:hover {
+        background-color: #218838;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: #fff;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+    }
+
+    /* Status Icons */
+    .status-waiting {
+        color: orange;
+        font-weight: bold;
+    }
+
+    .status-active {
+        color: green;
+        font-weight: bold;
+    }
+
+    .status-waiting i {
+        margin-left: 5px;
+    }
+
+    .status-active i {
+        margin-left: 5px;
+    }
+
+</style>
+
+<section id="datatable" class="datatable-section">
+    <div class="table-section">
+        <h2>User Data Table</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.phone }}</td>
+                    <td>{{ user.address }}</td>
+                    <td>
+                        {% if user.is_active %}
+                            <span class="status-active">Activated <i class="bi bi-check-circle-fill"></i></span>
+                        {% else %}
+                            <span class="status-waiting">Waiting <i class="bi bi-hourglass-split"></i></span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="/userActivate/?id={{ user.id }}" class="btn btn-primary">Activate</a>
+                        <a href="/userDeactivate/?id={{ user.id }}" class="btn btn-danger">Deactivate</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+{% endblock %}
